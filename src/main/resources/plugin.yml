@@ -6,3 +6,24 @@ authors: [ MinecraftID, ZeinCraft ]
 description: Minecraft World Manager, lets you manage player or group permissions in a world.
 website: www.minecraft-id.net
 depend: [Multiverse-Core,LuckPerms]
+permissions:
+  worldmanager.trust:
+    description: default permission for trusting
+  worldmanager.trust.player:
+    description: permission for trusting players
+    children:
+      worldmanager.trust: true
+  worldmanager.trust.group:
+    description: permission for trusting groups
+    children:
+      worldmanager.trust: true
+  worldmanager.globalworld:
+    description: permission for adding global worlds
+  worldmanager.admin:
+    children:
+      worldmanager.trust.*: true
+      worldmanager.globalworld: true
+  worldmanager.trust.*:
+    children:
+      worldmanager.trust.player: true
+      worldmanager.trust.group: true

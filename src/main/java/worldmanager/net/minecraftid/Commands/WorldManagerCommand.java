@@ -45,7 +45,9 @@ public class WorldManagerCommand {
                         })
                 )
                 .withSubcommand(new CommandAPICommand("trust")
+                        .withPermission("worldmanager.trust")
                         .withSubcommand(new CommandAPICommand("player")
+                                .withPermission("worldmanager.trust.player")
                                 .withArguments(CommandArgument.player("all"))
                                 .withArguments(CommandArgument.worldManager("bukkitWorld"))
                                 .executes((sender,args)->{
@@ -53,6 +55,7 @@ public class WorldManagerCommand {
                                 })
                         )
                         .withSubcommand(new CommandAPICommand("group")
+                                .withPermission("worldmanager.trust.group")
                                 .withArguments(CommandArgument.luckPermsGroup("all"))
                                 .withArguments(CommandArgument.worldManager("bukkitWorld"))
                                 .executes((sender,args)->{
@@ -61,7 +64,9 @@ public class WorldManagerCommand {
                         )
                 )
                 .withSubcommand(new CommandAPICommand("untrust")
+                        .withPermission("worldmanager.trust")
                         .withSubcommand(new CommandAPICommand("player")
+                                .withPermission("worldmanager.trust.player")
                                 .withArguments(CommandArgument.player("all"))
                                 .withArguments(CommandArgument.worldManager("bukkitWorld"))
                                 .executes((sender,args)->{
@@ -69,6 +74,7 @@ public class WorldManagerCommand {
                                 })
                         )
                         .withSubcommand(new CommandAPICommand("group")
+                                .withPermission("worldmanager.trust.group")
                                 .withArguments(CommandArgument.luckPermsGroup("all"))
                                 .withArguments(CommandArgument.worldManager("bukkitWorld"))
                                 .executes((sender,args)->{
@@ -76,7 +82,9 @@ public class WorldManagerCommand {
                                 })
                         )
                 )
-                .withSubcommand(new CommandAPICommand("global")
+                .withSubcommand(new CommandAPICommand("globalworld")
+                        .withAliases("gw")
+                        .withPermission("worldmanager.globalworld")
                         .withSubcommand(new CommandAPICommand("add")
                                 .withArguments(CommandArgument.worldManager("bukkitWorld"))
                                 .executes((sender,args)->{
@@ -94,6 +102,7 @@ public class WorldManagerCommand {
                 )
                 .withSubcommand(new CommandAPICommand("setdefault")
                         .withAliases("sd")
+                        .withPermission("worldmanager.admin")
                         .withArguments(CommandArgument.worldManager("globalWorld"))
                         .executes((sender,args) ->{
                             String worldName = args[0].toString();
@@ -107,7 +116,7 @@ public class WorldManagerCommand {
                         })
                 )
                 .withSubcommand(new CommandAPICommand("reloadconfig")
-                        .withPermission(CommandPermission.OP)
+                        .withPermission("worldmanager.admin")
                         .executes((sender,args)->{
                             Config.reload();
                             sender.sendMessage(Format.chat("Config Reloaded"));
@@ -133,6 +142,7 @@ public class WorldManagerCommand {
         Collections.sort(worldList);
         String cmd = "tellraw "+player.getName()+" "+ worldList.toString();
         sender.sendMessage(Format.chat("&f&lWorld Avalible &7Click to teleport\n-"));
+        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(),cmd);
     }
 
     private String setDefaultWorld(String worldname){
