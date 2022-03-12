@@ -1,0 +1,67 @@
+plugins {
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'java'
+}
+
+group = 'worldmanager'
+version = '1.0-SNAPSHOT'
+
+shadowJar {
+    project.configurations.implementation.canBeResolved = true
+    configurations = [project.configurations.implementation]
+    dependencies {
+        include dependency("dev.jorel.CommandAPI:commandapi-shade:6.5.4")
+    }
+    baseName 'WorldManager'
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://papermc.io/repo/repository/maven-public/"
+    }
+    maven {
+        name = 'spigotmc-repo'
+        url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+    }
+    maven {
+        name = 'sonatype'
+        url = 'https://oss.sonatype.org/content/groups/public/'
+    }
+    maven {
+        url = "https://jitpack.io"
+    }
+    maven {
+        url = "https://repo.codemc.org/repository/maven-public/"
+    }
+    maven {
+        url = "https://repo.onarandombox.com/content/groups/public/"
+    }
+}
+
+dependencies {
+    implementation 'org.spigotmc:spigot-api:1.17.1-R0.1-SNAPSHOT'
+    implementation 'org.mongodb:mongodb-driver-sync:4.5.0'
+    implementation 'dev.jorel.CommandAPI:commandapi-shade:6.5.4'
+    compileOnly 'com.onarandombox.multiversecore:Multiverse-Core:4.3.1'
+    compileOnly 'net.luckperms:api:5.4'
+}
+
+def targetJavaVersion = 16
+java {
+    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+    if (JavaVersion.current() < javaVersion) {
+        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+    }
+}
+
+processResources {
+    def props = [version: version]
+    inputs.properties props
+    filteringCharset 'UTF-8'
+    filesMatching('plugin.yml') {
+        expand props
+    }
+}

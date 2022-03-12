@@ -1,0 +1,8 @@
+name: WorldManager
+version: '${version}'
+main: worldmanager.net.minecraftid.WorldManager
+api-version: 1.17
+authors: [ MinecraftID, ZeinCraft ]
+description: Minecraft World Manager, lets you manage player or group permissions in a world.
+website: www.minecraft-id.net
+depend: [Multiverse-Core,LuckPerms]

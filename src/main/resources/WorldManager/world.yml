@@ -1,0 +1,5 @@
+defaultWorld: "world"
+globalWorld:
+  - world
+  - world_nether
+  - world_end
